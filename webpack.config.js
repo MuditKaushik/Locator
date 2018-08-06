@@ -1,28 +1,29 @@
 var path = require('path');
 var extractTextPlugin = require('extract-text-webpack-plugin');
+var webpack = require('webpack');
 
 module.exports = {
     mode: "development",
-    entry: path.resolve(__dirname, "es6/main.js"),
+    devtool: "source-map",
+    entry: path.resolve(__dirname, "src/main.ts"),
+    watch: false,
     output: {
         path: path.resolve(__dirname, "es5"),
         filename: "bundle.js"
     },
-    devtool: "source-map",
-    watch: true,
+    resolve: {
+        extensions: [".ts", ".tsx",".js"]
+    },
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: /(node_modules)/,
-                use: [
-                    {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['env']
-                        }
+                test: /\.ts$/,
+                use: [{
+                    loader: 'ts-loader',
+                    options: {
+                        allowTsInNodeModules: true
                     }
-                ]
+                }]
             },
             {
                 test: /\.scss$/,
@@ -46,5 +47,7 @@ module.exports = {
             }
         ]
     },
-    plugins: [new extractTextPlugin("style.css")]
+    plugins: [
+        new extractTextPlugin("style.css")
+    ]
 };

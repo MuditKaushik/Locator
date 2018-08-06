@@ -1,3 +1,5 @@
 /es5
 /node_modules
 /.vscode
+/config/development.json
+/config/default.json

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Locator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="es5/style.css" />
 </head>
 
@@ -13,7 +14,26 @@
     <div class="overlay d-none">
         <div class="loader"></div>
     </div>
-    <canvas name="canvasMap" id="canvasMap" class="canvasMap"></canvas>
+    <div class="container-fluid">
+        <div class="row mt-4">
+            <div class="col-md-9">
+                <canvas name="canvasMap" id="canvasMap" class="canvasMap"></canvas>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Select Member</h4>
+                        <div class="form-group">
+                            <select class="form-control" id="member-list">
+                                <option value="">Select Member</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-outline-primary" id="find">Find</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="es5/bundle.js"></script>
 </body>
 

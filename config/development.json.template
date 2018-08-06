@@ -1,0 +1,13 @@
+{
+    "port": "4200",
+    "api": [
+        {
+            "test": {
+                "baseUrl": "http://services.odata.org/V4/TripPinServiceRW/"
+            },
+            "dev": {
+                "baseUrl": "hosted api path."
+            }
+        }
+    ]
+}

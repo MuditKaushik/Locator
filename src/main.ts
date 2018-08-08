@@ -1,4 +1,5 @@
 import './polyfill/polyfill';
 import { Container } from './container';
+import { Renderer } from './canvas';
 Container.bind();
-Container.IoC().memberService.getMembers();
+new Renderer();

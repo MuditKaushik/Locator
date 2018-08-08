@@ -12,11 +12,20 @@
 
 <body>
     <div class="overlay d-none">
-        <div class="loader"></div>
+        <div id="loader" class="loader"></div>
     </div>
     <div class="container-fluid">
         <div class="row mt-4">
             <div class="col-md-9">
+                <div id="message" class="alert alert-dismissible fade show d-none" role="show">
+                    <span id="messagetext"></span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="messageClose">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="timedMessage" class="alert d-none" role="show">
+                    <span id="timedMessagetext"></span>
+                </div>
                 <canvas name="canvasMap" id="canvasMap" class="canvasMap"></canvas>
             </div>
             <div class="col-md-3">

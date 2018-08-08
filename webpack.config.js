@@ -6,18 +6,19 @@ module.exports = {
     mode: "development",
     devtool: "source-map",
     entry: path.resolve(__dirname, "src/main.ts"),
-    watch: false,
+    watch: true,
     output: {
         path: path.resolve(__dirname, "es5"),
         filename: "bundle.js"
     },
     resolve: {
-        extensions: [".ts", ".tsx",".js"]
+        extensions: [".ts", ".tsx", ".js"]
     },
     module: {
         rules: [
             {
                 test: /\.ts$/,
+                exclude: /node_modules/,
                 use: [{
                     loader: 'ts-loader',
                     options: {

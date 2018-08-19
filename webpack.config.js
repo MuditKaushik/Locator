@@ -5,7 +5,11 @@ var webpack = require('webpack');
 module.exports = {
     mode: "development",
     devtool: "source-map",
-    entry: path.resolve(__dirname, "src/main.ts"),
+    context: path.resolve(__dirname, ""),
+    entry: [
+        path.resolve(__dirname, "src/vendor.ts"),
+        path.resolve(__dirname, "src/main.ts")
+    ],
     watch: true,
     output: {
         path: path.resolve(__dirname, "es5"),
@@ -47,6 +51,16 @@ module.exports = {
                 })
             }
         ]
+    },
+    devServer: {
+        contentBase: [
+            path.resolve(__dirname, ''),
+            path.resolve(__dirname, 'src'),
+        ],
+        open: true,
+        compress: true,
+        port: 4200,
+        openPage: '/'
     },
     plugins: [
         new extractTextPlugin("style.css")

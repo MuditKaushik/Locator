@@ -30,6 +30,7 @@ export class HttpService {
         ajax({
             url: url,
             method: "GET",
+            type: 'json',
             headers: { "Content-Type": `${this._customContentType}`, Accept: "application/json" },
             contentType: "application/json",
             beforeSend: () => { Loader(true); },

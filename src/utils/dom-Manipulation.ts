@@ -42,19 +42,15 @@ export function BindFindEvent() {
  * @param messageText Display message text.
  */
 export function CreateAlertMessage(messageType: MessageType, messageText: string) {
-    let alertBoxDom = <HTMLDivElement>document.querySelector("#message");
-    let messageTextDom = <HTMLSpanElement>document.querySelector("#messagetext");
-    let alertMessageClose = <HTMLButtonElement>document.querySelector("#messageClose");
-    if (alertBoxDom && messageTextDom && alertMessageClose) {
-
-        alertBoxDom.classList.remove('d-none');
-        alertBoxDom.classList.add(messageType);
-        messageTextDom.innerText = messageText;
-
-        Observable.fromEvent(alertMessageClose, 'click').subscribe((data) => {
-            alertBoxDom.classList.add('d-none');
+    let alertBoxDom = CreateAlertMessageDom(messageType, messageText, true);
+    let content = document.querySelector('#canvas_content');
+    if (alertBoxDom.alertMessageDiv && alertBoxDom.alertDismissibleButton && content) {
+        content.appendChild(alertBoxDom.alertMessageDiv);
+        Observable.fromEvent(alertBoxDom.alertDismissibleButton, 'click').subscribe((data) => {
+            alertBoxDom.alertMessageDiv.remove();
         });
     }
+    return;
 }
 
 /**
@@ -64,14 +60,12 @@ export function CreateAlertMessage(messageType: MessageType, messageText: string
  * @param timeOut set timeout number in seconds.
  */
 export function CreateTimerAlert(messageType: MessageType, messageText: string, timeOut: number) {
-    let timedAlertBoxDom = <HTMLDivElement>document.querySelector("#timedMessage");
-    let timedMessageTextDom = <HTMLSpanElement>document.querySelector("#timedMessagetext");
-    if (timedAlertBoxDom && timedMessageTextDom) {
-        timedAlertBoxDom.classList.remove('d-none');
-        timedAlertBoxDom.classList.add(messageType);
-        timedMessageTextDom.innerHTML = messageText;
+    let timedAlertBoxDom = CreateAlertMessageDom(messageType, messageText, false);
+    let content = document.querySelector('#canvas_content');
+    if (timedAlertBoxDom.alertMessageDiv && content) {
+        content.appendChild(timedAlertBoxDom.alertMessageDiv);
         setTimeout(() => {
-            timedAlertBoxDom.classList.add('d-none');
+            timedAlertBoxDom.alertMessageDiv.remove();
         }, timeOut);
     }
     return;
@@ -83,6 +77,62 @@ export function CreateTimerAlert(messageType: MessageType, messageText: string, 
 export function GetFloorImage(): HTMLImageElement {
     let image = document.createElement("img");
     image.src = "./public/floor.jpg";
+    image.id = "floor-img";
     return image;
+}
+
+/**
+ * Hide image render in index with image id without hash.
+ * @param imageId 
+ */
+export function HideImage(imageId: string) {
+    let image = document.querySelector(`#${imageId}`);
+    if (image) {
+        image.classList.add('d-none');
+    }
+    return;
+}
+
+export function CreateCanvas(): HTMLCanvasElement {
+    let canvas: HTMLCanvasElement = document.createElement('canvas');
+    canvas.width = 850;
+    canvas.height = 800;
+    canvas.id = 'canvasMap';
+    canvas.classList.add('canvasMap');
+    return canvas;
+}
+
+/**
+ * 
+ * @param messageType message type enum
+ * @param message display message
+ * @param isDismissible is display message dismissible (is auto closable or not).
+ */
+function CreateAlertMessageDom(messageType: MessageType, message: string, isDismissible: boolean): { alertMessageDiv: HTMLDivElement, alertDismissibleButton?: HTMLButtonElement } {
+    let alertMessageDiv: HTMLDivElement = document.createElement('div');
+    let alertMessageText: HTMLSpanElement = document.createElement('span');
+    let alertDismissibleButton: HTMLButtonElement | undefined = undefined;
+    let alertMessageClasses: string[] = ['alert', messageType];
+
+    alertMessageText.innerHTML = message;
+    alertMessageDiv.appendChild(alertMessageText);
+
+    if (isDismissible) {
+        let buttonCloseSpanText: HTMLSpanElement = document.createElement('span');
+        buttonCloseSpanText.setAttribute('aria-hidden', 'true');
+        buttonCloseSpanText.innerHTML = '&times;';
+
+        alertDismissibleButton = document.createElement('button');
+        alertDismissibleButton.setAttribute('type', 'button');
+        alertDismissibleButton.setAttribute('data-dismiss', 'alert');
+        alertDismissibleButton.setAttribute('aria-label', 'Close');
+        alertDismissibleButton.classList.add('close');
+        alertDismissibleButton.appendChild(buttonCloseSpanText);
+
+        alertMessageClasses.push(...['alert-dismissible', 'fade', 'show']);
+        alertMessageDiv.appendChild(alertDismissibleButton);
+    }
+    alertMessageDiv.classList.add(...alertMessageClasses);
+    return { alertMessageDiv: alertMessageDiv, alertDismissibleButton };
 }
 

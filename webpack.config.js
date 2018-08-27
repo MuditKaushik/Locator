@@ -10,6 +10,7 @@ module.exports = {
         path.resolve(__dirname, "src/vendor.ts"),
         path.resolve(__dirname, "src/main.ts")
     ],
+    target: "web",
     watch: true,
     output: {
         path: path.resolve(__dirname, "es5"),
@@ -59,8 +60,7 @@ module.exports = {
         ],
         open: true,
         compress: true,
-        port: 4200,
-        openPage: '/'
+        port: 4200
     },
     plugins: [
         new extractTextPlugin("style.css")

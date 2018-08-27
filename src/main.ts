@@ -1,6 +1,6 @@
 import { Container } from './container';
 import { Renderer } from './canvas';
-import { GoogleDrive } from './google';
+import { DriveFilePicker } from './google';
 Container.bind();
 new Renderer();
-new GoogleDrive();
+new DriveFilePicker();

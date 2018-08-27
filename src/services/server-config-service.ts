@@ -1,11 +1,11 @@
 import { Container } from '../container';
-import { IGoogleConfigModel } from '../models';
+import { IGoogleConfig } from '../models';
 
 export class ServerConfigService {
     constructor() { }
     getGoogleDriveService() {
         return Container.IoC().serverConfigDataAccess
-            .getGoogleConfig().map((data: IGoogleConfigModel) => {
+            .getGoogleConfig().map((data: IGoogleConfig) => {
                 return data;
             });
     }

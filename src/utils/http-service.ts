@@ -1,17 +1,21 @@
 import { ajax, Deferred } from 'jquery';
 import { Loader } from './loader';
-
+import { ICustomHeader } from '../models';
 export class HttpService {
-    private _customContentType: string;
-    constructor(contentType: string = "application/json") {
-        this._customContentType = contentType;
+    private _customHeader: any = {};
+    constructor(customHeader: ICustomHeader = {}) {
+        this._customHeader = {
+            "Content-Type": customHeader.ContentType || "application/json",
+            Accept: customHeader.Accept || "application/json",
+            Authorization: customHeader.Authorization || ""
+        };
     }
     Delete(url: string): JQueryDeferred<any> {
         let deferred = Deferred();
         ajax({
             url: url,
             method: "Delete",
-            headers: { "Content-Type": `${this._customContentType}`, Accept: "application/json" },
+            headers: this._customHeader,
             contentType: "application/json",
             beforeSend: () => { Loader(true); },
             success: (data) => {
@@ -31,7 +35,7 @@ export class HttpService {
             url: url,
             method: "GET",
             type: 'json',
-            headers: { "Content-Type": `${this._customContentType}`, Accept: "application/json" },
+            headers: this._customHeader,
             contentType: "application/json",
             beforeSend: () => { Loader(true); },
             success: (data) => {
@@ -50,7 +54,7 @@ export class HttpService {
         ajax({
             url: url,
             method: "POST",
-            headers: { "Content-Type": `${this._customContentType}`, Accept: "application/json" },
+            headers: this._customHeader,
             contentType: "application/json",
             data: body || {},
             beforeSend: () => { Loader(true) },
@@ -70,7 +74,7 @@ export class HttpService {
         ajax({
             url: url,
             method: "PUT",
-            headers: { "Content-Type": `${this._customContentType}`, Accept: "application/json" },
+            headers: this._customHeader,
             contentType: "application/json",
             data: body || {},
             beforeSend: () => { Loader(true); },

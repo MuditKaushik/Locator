@@ -102,6 +102,14 @@ export function CreateCanvas(): HTMLCanvasElement {
     return canvas;
 }
 
+export function CreateIFrame(url: string): HTMLIFrameElement {
+    let iframe = <HTMLIFrameElement>document.createElement('iframe');
+    iframe.setAttribute('src', url);
+    // iframe.width = '80%';
+    iframe.classList.add('iframe_google');
+    return iframe;
+}
+
 /**
  * 
  * @param messageType message type enum

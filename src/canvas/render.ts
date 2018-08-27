@@ -27,10 +27,10 @@ export class Renderer {
         let image = GetFloorImage();
         if (content && image && canvas) {
             CreateTimerAlert(MessageType.success, "Canvas found and rendering.", 2000);
-            content.appendChild(canvas);
-            image.onload = () => {
-                this.renderCanvas(image, canvas);
-            };
+            // content.appendChild(canvas);
+            // image.onload = () => {
+            //     this.renderCanvas(image, canvas);
+            // };
         } else {
             canvas.remove();
             CreateAlertMessage(MessageType.danger, "Unable to create canvas.");
